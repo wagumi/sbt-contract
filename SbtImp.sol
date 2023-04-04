@@ -43,7 +43,7 @@ contract SbtImp {
         SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
         require(msg.sender == sbtstruct.contractOwner,"OWNER ONLY");
         sbtstruct.baseURI = _newBaseURI;
-    } 
+    }
 
     function setContractOwner(address _newContactOwner) external {
         SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
@@ -82,5 +82,10 @@ contract SbtImp {
         return
             keccak256(abi.encodePacked(ecrecover(_hash, _v, _r, _s))) ==
             sbtstruct.validator;
+    }
+
+    function balanceOf(address _address) external view returns (uint) {
+        SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
+        return sbtstruct.balances[_address];
     }
 }
