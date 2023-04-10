@@ -84,8 +84,8 @@ contract SbtImp {
             sbtstruct.validator;
     }
 
-    function balanceOf(address _address) external view returns (uint) {
+    function balanceOf(address _owner) external view returns (uint256) {
         SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
-        return sbtstruct.balances[_address];
+        return sbtstruct.balances[_owner];
     }
 }
