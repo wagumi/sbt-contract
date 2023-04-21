@@ -25,12 +25,10 @@ contract SbtImp {
         require(verify(_messagehash, _signature), "INVALID");
         SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
         sbtstruct.owners[_tokenId] = _address;
-        unchecked {
-            sbtstruct.balances[_address]++;
-        }
         emit Transfer(address(0), _address, _tokenId);
     }
 
+    // 0x42966c68
     function burn(uint256 _tokenId) external {
         SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
         address currentOwner = sbtstruct.owners[_tokenId];
@@ -39,10 +37,10 @@ contract SbtImp {
             "CONTRACT OWNER OR CURRENT OWNER ONLY"
         );
         delete sbtstruct.owners[_tokenId];
-        // TODO: sbtstruct.balances[_address]--する必要があるか?
         emit Transfer(currentOwner, address(0), _tokenId);
     }
 
+    // 0x5705ae43
     function recover(
         address _address,
         uint256 _tokenId
@@ -50,16 +48,17 @@ contract SbtImp {
         SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
         require(msg.sender == sbtstruct.contractOwner, "OWNER ONLY");
         sbtstruct.owners[_tokenId] = _address;
-        // TODO: sbtstruct.balances[_address]++する必要があるか?
         emit Transfer(address(0), _address, _tokenId);
     }
 
+    // 0xa0bcfc7f
     function setBaseUri(string memory _newBaseURI) external {
         SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
         require(msg.sender == sbtstruct.contractOwner,"OWNER ONLY");
         sbtstruct.baseURI = _newBaseURI;
     }
 
+    // 0xa34d42b8
     function setContractOwner(address _newContactOwner) external {
         SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
         require(msg.sender == sbtstruct.contractOwner, "OWNER ONLY");
@@ -67,6 +66,7 @@ contract SbtImp {
         emit ContractOwnerChanged(_newContactOwner);
     }
 
+    // 0x34a53c01
     function setValidator(bytes32 _newValidator) external {
         SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
         require(msg.sender == sbtstruct.contractOwner, "OWNER ONLY");
@@ -74,11 +74,13 @@ contract SbtImp {
         emit ValidatorChanged(_newValidator);
     }
 
+    // 0x1195e07e
     function getValidator() external view returns (bytes32) {
         SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
         return sbtstruct.validator;
     }
 
+    // 0x258ae582
     function verify(bytes32 _hash, bytes memory _signature)
         public
         view
