@@ -40,17 +40,6 @@ contract SbtImp {
         emit Transfer(currentOwner, address(0), _tokenId);
     }
 
-    // 0x5705ae43
-    function recover(
-        address _address,
-        uint256 _tokenId
-    ) external {
-        SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
-        require(msg.sender == sbtstruct.contractOwner, "OWNER ONLY");
-        sbtstruct.owners[_tokenId] = _address;
-        emit Transfer(address(0), _address, _tokenId);
-    }
-
     // 0xa0bcfc7f
     function setBaseUri(string memory _newBaseURI) external {
         SbtLib.SbtStruct storage sbtstruct = SbtLib.sbtStorage();
